@@ -1,0 +1,7 @@
+# vim: ft=dockerfile
+FROM python:3.10
+
+RUN pip install \
+        black \
+        blue \
+        "python-lsp-server[all]"
