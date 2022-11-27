@@ -1,6 +1,6 @@
 .PHONY: python-build
 python-build:
-	docker build -f Dockerfile-pydev . -t rds/pydev
+	docker build -f Dockerfile-pydev . -t ghcr.io/s-rafaeldias/pydev:latest
 
 .PHONY: python-run
 python-run:
@@ -10,7 +10,17 @@ python-run:
 		--detach \
 		--interactive \
 		--entrypoint=/bin/bash \
-		rds/pydev
+		ghcr.io/s-rafaeldias/pydev:latest
 
 .PHONY: python
 python: python-build python-run
+
+.PHONY: python-deploy
+python-deploy: python-build
+	docker push ghcr.io/s-rafaeldias/pydev:latest
+
+.PHONY: deploy
+deploy: python-deploy
+
+.PHONY: start
+start: python-run
